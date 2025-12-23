@@ -12,7 +12,7 @@ def train_models():
     processed_dir = os.path.join("data", "processed")
     models_dir = "models"
     
-    # Load data
+
     print("Loading data...")
     X_train = sparse.load_npz(os.path.join(processed_dir, "X_train.npz"))
     X_test = sparse.load_npz(os.path.join(processed_dir, "X_test.npz"))
@@ -23,7 +23,7 @@ def train_models():
     le = joblib.load(os.path.join(models_dir, "label_encoder.joblib"))
     target_names = [str(cls) for cls in le.classes_]
     
-    # Define models
+
     models = {
         "Logistic Regression": LogisticRegression(max_iter=1000, random_state=42),
         "Linear SVM": LinearSVC(random_state=42, dual='auto'),
@@ -63,12 +63,11 @@ def train_models():
     print("-" * 60)
     print(f"Best Model: {best_model_name} (F1 Score: {best_f1:.4f})")
     
-    # Save best model
+
     model_path = os.path.join(models_dir, "best_model.joblib")
     joblib.dump(best_model, model_path)
     print(f"Saved best model to {model_path}")
     
-    # Save results
     with open(os.path.join(models_dir, "results.json"), "w") as f:
         json.dump(results, f, indent=4)
         

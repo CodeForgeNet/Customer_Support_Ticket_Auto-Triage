@@ -5,22 +5,14 @@ import os
 from sklearn.model_selection import train_test_split
 
 def clean_text(text):
-    """
-    Applies basic text cleaning:
-    - Lowercase
-    - Remove special characters (keep alphanumeric and spaces)
-    - Remove extra whitespace
-    """
+
     if not isinstance(text, str):
         return ""
     
-    # Lowercase
     text = text.lower()
     
-    # Remove special chars (keep only letters, numbers, and basic punctuation)
     text = re.sub(r'[^a-z0-9\s.,!?]', '', text)
     
-    # Remove extra whitespace
     text = re.sub(r'\s+', ' ', text).strip()
     
     return text
@@ -36,15 +28,12 @@ def preprocess_data():
         
     df = pd.read_csv(input_path)
     
-    # Basic cleaning
     print("Cleaning text fields...")
     df['cleaned_subject'] = df['subject'].apply(clean_text)
     df['cleaned_description'] = df['description'].apply(clean_text)
     
-    # Combine subject and description for model input
     df['text'] = df['cleaned_subject'] + " " + df['cleaned_description']
     
-    # Split data (Stratified to maintain class balance)
     print("Splitting data into train/test sets...")
     train_df, test_df = train_test_split(
         df, 
@@ -53,7 +42,6 @@ def preprocess_data():
         random_state=42
     )
     
-    # Save processed data
     os.makedirs(os.path.dirname(output_train_path), exist_ok=True)
     
     train_df.to_csv(output_train_path, index=False)
@@ -62,7 +50,6 @@ def preprocess_data():
     print(f"Saved training set: {len(train_df)} rows to {output_train_path}")
     print(f"Saved test set: {len(test_df)} rows to {output_test_path}")
     
-    # Verify split distribution
     print("\nTraining Class Distribution:")
     print(train_df['category'].value_counts(normalize=True))
     

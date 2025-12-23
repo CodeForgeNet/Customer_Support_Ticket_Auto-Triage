@@ -1,5 +1,3 @@
-#!/bin/bash
-
 echo "Testing Health Endpoint..."
 curl -s http://localhost:5001/health | python3 -m json.tool
 

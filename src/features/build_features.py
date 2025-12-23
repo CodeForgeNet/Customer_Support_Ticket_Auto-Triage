@@ -12,7 +12,7 @@ def build_features():
     models_dir = "models"
     processed_dir = os.path.join("data", "processed")
     
-    # Check if files exist
+
     if not os.path.exists(train_path) or not os.path.exists(test_path):
         raise FileNotFoundError("Processed data not found. Run preprocess.py first.")
     
@@ -52,11 +52,9 @@ def build_features():
     
     # Save features
     print("Saving features...")
-    # Use scipy.sparse.save_npz for sparse matrices to save space
     sparse.save_npz(os.path.join(processed_dir, "X_train.npz"), X_train)
     sparse.save_npz(os.path.join(processed_dir, "X_test.npz"), X_test)
     
-    # Save labels as numpy arrays
     np.save(os.path.join(processed_dir, "y_train.npy"), y_train)
     np.save(os.path.join(processed_dir, "y_test.npy"), y_test)
     

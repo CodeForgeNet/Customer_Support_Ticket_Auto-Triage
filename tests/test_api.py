@@ -3,7 +3,7 @@ import sys
 import os
 import json
 
-# Add project root to path
+
 sys.path.append(os.path.abspath(os.path.join(os.path.dirname(__file__), '..')))
 
 from src.api.app import app, load_artifacts

@@ -5,23 +5,15 @@ import re
 from flask import Flask, request, jsonify
 
 # Ensure we can import from src if needed, though we will likely just duplicate clean_text for simplicity regarding paths
-# Add project root to path
 sys.path.append(os.path.abspath(os.path.join(os.path.dirname(__file__), '..', '..')))
 
 app = Flask(__name__)
 
-# Global variables for models
 model = None
 vectorizer = None
 label_encoder = None
 
 def clean_text(text):
-    """
-    Applies basic text cleaning:
-    - Lowercase
-    - Remove special characters (keep alphanumeric and spaces)
-    - Remove extra whitespace
-    """
     if not isinstance(text, str):
         return ""
     text = text.lower()
@@ -38,7 +30,6 @@ def load_artifacts():
         # Try going up two levels if running from src/api
         models_dir = os.path.join("..", "..", "models")
         if not os.path.exists(models_dir):
-             # Try absolute path based on this file
              models_dir = os.path.abspath(os.path.join(os.path.dirname(__file__), '..', '..', 'models'))
 
     print(f"Loading artifacts from {models_dir}...")

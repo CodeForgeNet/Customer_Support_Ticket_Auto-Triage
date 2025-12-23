@@ -19,7 +19,6 @@ CATEGORIES = [
 
 PRIORITIES = ["Low", "Medium", "High", "Critical"]
 
-# Templates for data generation
 TEMPLATES = {
     "Bug Report": {
         "subjects": [
@@ -128,14 +127,12 @@ def generate_ticket():
     subject = random.choice(template["subjects"])
     description = random.choice(template["descriptions"])
     
-    # Add some random noise/variation to description
     if random.random() > 0.8:
         description += f" Please help! Ticket ID ref: {random.randint(1000, 9999)}."
     if random.random() > 0.9:
         subject = f"URGENT: {subject}"
         
     priority = random.choice(PRIORITIES)
-    # Skew priority based on category/keywords
     if "URGENT" in subject or "Critical" in subject or category == "Technical Issue":
          priority = np.random.choice(PRIORITIES, p=[0.1, 0.2, 0.3, 0.4])
     else:
@@ -161,7 +158,6 @@ def main():
     df.to_csv(output_path, index=False)
     print(f"Successfully saved {len(df)} tickets to {output_path}")
     
-    # Display sample
     print("\nSample Data:")
     print(df.head())
     print("\nCategory Distribution:")
